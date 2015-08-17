@@ -5,9 +5,9 @@ unattended=yes
 
 # set information for remote server
 if [ "$unattended" = "yes" ]; then
-	user=
-	address=
-	port=
+	user=root
+	address=192.184.82.89
+	port=443
 else
 	# set username
 	clear
@@ -37,36 +37,26 @@ ssh-copy-id "$user@$address -p $port"
 # create log file
 touch /var/log/tunnel.log
 
-# create device registration script
-echo '#!/bin/bash
-last_used_port=$(tail -1 /var/log/raspi.log | awk '\''{ print $2 }'\'')
-new_port=$((last_used_port+1))
-echo "$(date +%Y%m%d-%H:%M:%S) $new_port" >> /var/log/raspi.log' > /usr/bin/register
-
-# set registration script to executable
-chmod 700 /usr/bin/register
-
 # complete registration
-ssh -p $port $user@$address "bash -s" < /usr/bin/register &> /var/log/register.log
-
-# store registered port for use in tunnel script
-registered_port=$(cat test.log | cut -d " " -f 2)
+registered_port=$(ssh -p $port $user@$address 'register && tail -1 /var/log/raspi.log | cut -d " " -f 2')
 
 # create tunnel script
-echo -e "#!/bin/bash
+cat > /usr/bin/tunnel << EndOfMessage
+#!/bin/bash
 createTunnel() {
-  /usr/bin/ssh -p $port -N -R $registered_port:localhost:22 $user@$address
-  if [[ $? -eq 0 ]]; then
+  /usr/bin/ssh -p $port -N -R $registered_port:localhost:22 $user@$address 
+  if [[ \$? -eq 0 ]]; then
     echo Called home successfully.
   else
     echo An error occurred calling home. RC was $?
   fi
 }
 /bin/pidof ssh
-if [[ $? -ne 0 ]]; then
+if [[ \$? -ne 0 ]]; then
   echo Creating new tunnel connection
   createTunnel
-fi" > /usr/bin/tunnel 2>&1
+fi
+EndOfMessage
 
 # set tunnel to executable
 chmod 700 /usr/bin/tunnel
