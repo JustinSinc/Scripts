@@ -13,6 +13,8 @@ echo "Installing zsh-syntax-highlighting..."
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/zsh-syntax-highlighting
 echo "Grabbing ~/.zshrc from my repo..."
 wget https://raw.githubusercontent.com/JustinSinc/shells/master/.zshrc.oh-my-zsh -O ~/.zshrc
+echo "Grabbing modified fishy.zsh-theme from my repo..."
+wget https://raw.githubusercontent.com/JustinSinc/dotfiles/master/fishy.zsh-theme -O ~/.oh-my-zsh/themes/
 echo "Changing shell to /usr/bin/zsh..."
 chsh -s $(which zsh)
 clear
