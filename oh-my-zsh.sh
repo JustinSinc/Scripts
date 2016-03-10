@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Installing zsh..."
 if type apt-get > /dev/null; then
-  sudo apt-get install zsh python python-pip python-dev
+  sudo apt-get install -y zsh python python-pip python-dev
 elif type pacman > /dev/null; then
   sudo pacman -S zshrc python python-pip
 fi
