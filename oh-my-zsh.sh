@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "Installing zsh..."
 if type apt-get > /dev/null; then
-  sudo apt-get -y install zsh python python-pip python-dev curl
+  sudo apt-get -y install zsh python python-pip python-dev curl git
 elif type pacman > /dev/null; then
-  sudo pacman -S zshrc python python-pip curl
+  sudo pacman -S zshrc python python-pip curl git
 fi
 echo "Installing oh-my-zsh..."
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
