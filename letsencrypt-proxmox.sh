@@ -11,13 +11,13 @@ read email
 apt-get install git
 
 # clone letsencrypt
-git clone https://github.com/letsencrypt/letsencrypt ~/
+git clone https://github.com/letsencrypt/letsencrypt /
 
 # make sure script works even if port 80 is currently bound
-sed -i '/ \"\"\"$/a \\n\ \ \ \ return False\n' ~/letsencrypt/certbot/plugins/util.py
+sed -i '/ \"\"\"$/a \\n\ \ \ \ return False\n' /letsencrypt/certbot/plugins/util.py
 
 # generate LetsEncrypt certs
-~/letsencrypt/letsencrypt-auto certonly --standalone --standalone-supported-challenges http-01 -d $host_name --agree-tos --email=$email
+/letsencrypt/letsencrypt-auto certonly --standalone --standalone-supported-challenges http-01 -d $host_name --agree-tos --email=$email
 
 # back up existing Proxmox certs
 mv /etc/pve/pve-root-ca.pem /etc/pve/pve-root-ca.pem.orig
@@ -32,3 +32,6 @@ cp /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem
 # restart Proxmox VE
 service pveproxy restart
 service pvedaemon restart
+
+# add LetsEncrypt renewal cron job
+$(sudo crontab -l; 0 0 1 JAN, APR, JUL, OCT * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email) | crontab -
