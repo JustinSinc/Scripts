@@ -34,4 +34,4 @@ service pveproxy restart
 service pvedaemon restart
 
 # add LetsEncrypt renewal cron job
-$(sudo crontab -l; echo "0 0 1 JAN,APR,JUL,OCT * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
+$(crontab -l; echo "0 0 1 JAN,APR,JUL,OCT * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
