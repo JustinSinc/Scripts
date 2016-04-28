@@ -31,13 +31,23 @@ mv /etc/pve/local/pve-ssl.key /etc/pve/local/pve-ssl.key.orig
 mv /etc/pve/local/pve-ssl.pem /etc/pve/local/pve-ssl.pem.orig
 
 # install new LetsEncrypt certs
-cp /etc/letsencrypt/live/$host_name/chain.pem /etc/pve/pve-root-ca.pem
-cp /etc/letsencrypt/live/$host_name/privkey.pem /etc/pve/local/pve-ssl.key
-cp /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem
+cp "/etc/letsencrypt/live/$host_name/chain.pem" /etc/pve/pve-root-ca.pem
+cp "/etc/letsencrypt/live/$host_name/privkey.pem" /etc/pve/local/pve-ssl.key
+cp "/etc/letsencrypt/live/$host_name/cert.pem" /etc/pve/local/pve-ssl.pem
 
 # restart Proxmox VE
 service pveproxy restart
 service pvedaemon restart
 
+# create renewal script
+echo "#\!/bin/bash
+/letsencrypt/letsencrypt-auto renew --agree-tos --email=$email;
+cp /etc/letsencrypt/live/$host_name/chain.pem /etc/pve/pve-root-ca.pem;
+cp /etc/letsencrypt/live/$host_name/privkey.pem /etc/pve/local/pve-ssl.key;
+cp /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem" > /usr/bin/letsencrypt-renew
+
+# make renewal script executable
+chmod +x /usr/bin/letsencrypt-renew
+
 # add LetsEncrypt renewal cron job
-$(crontab -l; echo "0 0 1 $this_month,$renew_one,$renew_two,$renew_three * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
+$(crontab -l; echo "0 0 1 $this_month,$renew_one,$renew_two,$renew_three * /usr/bin/letsencrypt-renew") | crontab -
