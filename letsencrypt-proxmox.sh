@@ -27,7 +27,7 @@ git clone https://github.com/letsencrypt/letsencrypt /
 sed -i '/ \"\"\"$/a \\n\ \ \ \ return False\n' /letsencrypt/certbot/plugins/util.py
 
 # generate LetsEncrypt certs
-/letsencrypt/letsencrypt-auto certonly --standalone --standalone-supported-challenges http-01 -d $host_name --agree-tos --email=$email
+/letsencrypt/letsencrypt-auto certonly --standalone --standalone-supported-challenges http-01 -d "$host_name" --agree-tos --email="$email"
 
 # back up existing Proxmox certs
 mv /etc/pve/pve-root-ca.pem /etc/pve/pve-root-ca.pem.orig
@@ -45,13 +45,13 @@ service pvedaemon restart
 
 # create renewal script
 echo "#\!/bin/bash
-/letsencrypt/letsencrypt-auto renew --agree-tos --email=$email;
-mv /etc/pve/pve-root-ca.pem /etc/pve/pve-root-ca.pem.$today;
-mv /etc/pve/local/pve-ssl.key /etc/pve/local/pve-ssl.key.$today;
-mv /etc/pve/local/pve-ssl.pem /etc/pve/local/pve-ssl.pem.$today);
-cp /etc/letsencrypt/live/$host_name/chain.pem /etc/pve/pve-root-ca.pem;
-cp /etc/letsencrypt/live/$host_name/privkey.pem /etc/pve/local/pve-ssl.key;
-cp /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem;
+/letsencrypt/letsencrypt-auto renew --agree-tos --email="$email";
+mv /etc/pve/pve-root-ca.pem "/etc/pve/pve-root-ca.pem.$today";
+mv /etc/pve/local/pve-ssl.key "/etc/pve/local/pve-ssl.key.$today";
+mv /etc/pve/local/pve-ssl.pem "/etc/pve/local/pve-ssl.pem.$today");
+cp "/etc/letsencrypt/live/$host_name/chain.pem" /etc/pve/pve-root-ca.pem;
+cp "/etc/letsencrypt/live/$host_name/privkey.pem" /etc/pve/local/pve-ssl.key;
+cp "/etc/letsencrypt/live/$host_name/cert.pem" /etc/pve/local/pve-ssl.pem;
 service pveproxy restart;
 service pvedaemon restart" > /usr/bin/letsencrypt-renew
 
