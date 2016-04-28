@@ -47,7 +47,9 @@ mv -- /etc/pve/local/pve-ssl.key /etc/pve/local/pve-ssl.key.$(date +%Y%m%d);
 mv -- /etc/pve/local/pve-ssl.pem /etc/pve/local/pve-ssl.pem.$(date +%Y%m%d);
 cp -- /etc/letsencrypt/live/$host_name/chain.pem /etc/pve/pve-root-ca.pem;
 cp -- /etc/letsencrypt/live/$host_name/privkey.pem /etc/pve/local/pve-ssl.key;
-cp -- /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem" > /usr/bin/letsencrypt-renew
+cp -- /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem;
+service pveproxy restart;
+service pvedaemon restart" > /usr/bin/letsencrypt-renew
 
 # make renewal script executable
 chmod +x /usr/bin/letsencrypt-renew
