@@ -8,10 +8,10 @@ host_name=$(hostname -f)
 today=$(date +%Y%m%d)
 
 # set dates for renewal
-this_month=`date +'%^b'`
-renew_one=`date +'%^b' -d '+3 month'`
-renew_two=`date +'%^b' -d '+6 month'`
-renew_three=`date +'%^b' -d '+9 month'`
+this_month=$(date +'%^b')
+renew_one=$(date +'%^b' -d '+3 month')
+renew_two=$(date +'%^b' -d '+6 month')
+renew_three=$(date +'%^b' -d '+9 month')
 
 # ask for user's email address for LetsEncrypt registration
 echo -e "Please enter your contact email address:\n"
