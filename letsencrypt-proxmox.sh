@@ -53,4 +53,4 @@ cp /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem" > /usr/
 chmod +x /usr/bin/letsencrypt-renew
 
 # add LetsEncrypt renewal cron job
-$(crontab -l; echo "0 0 1 $this_month,$renew_one,$renew_two,$renew_three * /usr/bin/letsencrypt-renew") | crontab -
+printf "$(crontab -l; echo -e "0 0 1 $this_month,$renew_one,$renew_two,$renew_three * /usr/bin/letsencrypt-renew \n ")" | crontab -
