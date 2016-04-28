@@ -3,6 +3,12 @@
 # set $hostname equal to FQDN
 host_name=$(hostname -f)
 
+# set months for renewal
+this_month=`date +'%^b'`
+renew_one=`date +'%^b' -d '+3 month'`
+renew_two=`date +'%^b' -d '+6 month'`
+renew_three=`date +'%^b' -d '+9 month'`
+
 # ask for user's email address for LetsEncrypt registration
 echo -e "Please enter your contact email address:\n"
 read email
@@ -34,4 +40,4 @@ service pveproxy restart
 service pvedaemon restart
 
 # add LetsEncrypt renewal cron job
-$(crontab -l; echo "0 0 1 JAN,APR,JUL,OCT * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
+$(crontab -l; echo "0 0 1 $this_month,$renew_one,$renew_two,$renew_three * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
