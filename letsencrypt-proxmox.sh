@@ -4,7 +4,6 @@
 host_name=$(hostname -f)
 
 # set dates for renewal
-yesterday=`date +%d -d 'yesterday'`
 this_month=`date +'%^b'`
 renew_one=`date +'%^b' -d '+3 month'`
 renew_two=`date +'%^b' -d '+6 month'`
@@ -41,4 +40,4 @@ service pveproxy restart
 service pvedaemon restart
 
 # add LetsEncrypt renewal cron job
-$(crontab -l; echo "0 0 $yesterday $this_month,$renew_one,$renew_two,$renew_three * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
+$(crontab -l; echo "0 0 1 $this_month,$renew_one,$renew_two,$renew_three * /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email") | crontab -
