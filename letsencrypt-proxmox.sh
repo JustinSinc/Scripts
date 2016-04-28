@@ -1,4 +1,5 @@
 #!/bin/bash
+# a script to configure Proxmox VE to use Let's Encrypt free SSL certs and automate cert renewal
 
 # set $hostname equal to FQDN
 host_name=$(hostname -f)
