@@ -42,6 +42,9 @@ service pvedaemon restart
 # create renewal script
 echo "#\!/bin/bash
 /letsencrypt/letsencrypt-auto renew --agree-tos --email=$email;
+mv /etc/pve/pve-root-ca.pem /etc/pve/pve-root-ca.pem.$(date +%Y%m%d);
+mv /etc/pve/local/pve-ssl.key /etc/pve/local/pve-ssl.key.$(date +%Y%m%d);
+mv /etc/pve/local/pve-ssl.pem /etc/pve/local/pve-ssl.pem.$(date +%Y%m%d);
 cp /etc/letsencrypt/live/$host_name/chain.pem /etc/pve/pve-root-ca.pem;
 cp /etc/letsencrypt/live/$host_name/privkey.pem /etc/pve/local/pve-ssl.key;
 cp /etc/letsencrypt/live/$host_name/cert.pem /etc/pve/local/pve-ssl.pem" > /usr/bin/letsencrypt-renew
