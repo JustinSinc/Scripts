@@ -4,6 +4,8 @@
 # This script kills any existing autossh connections, and tunnels to my jump host
 # and then restarts them.
 
+# Requires autossh, ssh
+
 # assign the hostname of the tunnel host here
 tunnel_host=gate
 
