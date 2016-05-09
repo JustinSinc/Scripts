@@ -19,7 +19,7 @@ old_tunnel=$(ps ax | grep ssh | grep "$tunnel_host" | grep -v grep | awk '{ prin
 # if an SSH tunnel exists, kill it
 if [ -n "$old_tunnel" ]; then
         echo -n "Removing existing SSH tunnel... "
-        kill -9 "$old_tunnel"
+        kill -9 $old_tunnel
         echo "Done!"
         sleep 5
 else
