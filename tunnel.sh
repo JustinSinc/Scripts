@@ -7,16 +7,16 @@
 # Requires autossh, ssh
 
 # assign the hostname of the tunnel host here
-tunnel_host=gate
+tunnel_host="gate"
 
 # assign the local port for the tunnel here
-tunnel_port=1336
+tunnel_port="1336"
 
 # assign the autossh monitor port here
-monitor_port=2050
+monitor_port="2050"
 
 # assign $old_tunnel to the PIDs, if any, of existing SSH connections to host "$tunnel_host"
-old_tunnel=$(ps ax | grep ssh | grep "$tunnel_host" | grep -v grep | awk '{ print $1 }')
+old_tunnel="$(ps ax | grep ssh | grep "$tunnel_host" | grep -v grep | awk '{ print $1 }')""
 
 # if an SSH tunnel exists, kill it
 if [ -n "$old_tunnel" ]; then
