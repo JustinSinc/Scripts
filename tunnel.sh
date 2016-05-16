@@ -16,7 +16,7 @@ tunnel_port="1336"
 monitor_port="2050"
 
 # assign $old_tunnel to the PIDs, if any, of existing SSH connections to host "$tunnel_host"
-old_tunnel="$(ps ax | grep ssh | grep "$tunnel_host" | grep -v grep | awk '{ print $1 }')""
+old_tunnel="$(ps ax | grep ssh | grep "$tunnel_host" | grep "\-D" | grep -v grep | awk '{ print $1 }')""
 
 # if an SSH tunnel exists, kill it
 if [ -n "$old_tunnel" ]; then
