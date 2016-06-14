@@ -20,6 +20,9 @@ read forwarded_to
 # Remove the port forward from iptables
 sudo iptables -t nat -D PREROUTING -p "$protocol" --dport "$forwarded_port" -j DNAT --to "$forward_to":"$forwarded_to"
 
+# Disable the port forward
+sudo iptables -D FORWARD -d "$forward_to" -p "$protocol" --dport "$forwarded_port" -j ACCEPT
+
 # Clear the screen, and let the user know the forward succeeded
 cleara
 echo -e "\n"$protocol" port "$forwarded_port" no longer forwarded to port "$forwarded_to" on host "$forward_to".\n\n\n"
