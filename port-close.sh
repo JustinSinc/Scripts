@@ -23,6 +23,9 @@ sudo iptables -t nat -D PREROUTING -p "$protocol" --dport "$forwarded_port" -j D
 # Disable the port forward
 sudo iptables -D FORWARD -d "$forward_to" -p "$protocol" --dport "$forwarded_port" -j ACCEPT
 
+# Save changes
+sudo dpkg-reconfigure iptables-persistent
+
 # Clear the screen, and let the user know the forward succeeded
 clear
 echo -e "\n"$protocol" port "$forwarded_port" no longer forwarded to port "$forwarded_to" on host "$forward_to".\n\n\n"
