@@ -18,7 +18,7 @@ echo -e "\nPort to forward to:\n"
 read forwarded_to
 
 # Remove the port forward from iptables
-sudo iptables -t nat -D PREROUTING -p "$protocol" --dport "$forwarded_port" -j DNAT --to "$forward_to":"$forwarded_$
+sudo iptables -t nat -D PREROUTING -p "$protocol" --dport "$forwarded_port" -j DNAT --to "$forward_to":"$forwarded_to"
 
 # Clear the screen, and let the user know the forward succeeded
 clear
