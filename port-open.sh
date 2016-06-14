@@ -20,6 +20,9 @@ read forwarded_to
 # Forward the port using iptables
 sudo iptables -t nat -A PREROUTING -p "$protocol" --dport "$forwarded_port" -j DNAT --to "$forward_to":"$forwarded_to"
 
+# Enable the port forward
+sudo iptables -A FORWARD -d "$forward_to" -p "$protocol" --dport "$forwarded_port" -j ACCEPT
+
 # Clear the screen, and let the user know the forward succeeded
 clear
 echo -e "\n"$protocol" port "$forwarded_port" forwarded to port "$forwarded_to" on host "$forward_to".\n\n\n"
