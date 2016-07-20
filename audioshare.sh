@@ -4,10 +4,10 @@
 set -euo pipefail
 
 # remove any leftover backup files, suppressing errors if none exist
-rm /home/sinc/test/*.bak 2> /dev/null
+rm /home/sinc/audio/*.bak 2> /dev/null
 
 # add any new mp3 files to the page
-for i in *.mp3; do
+for i in /home/sinc/audio/*.mp3; do
     # create an HTML5 audio tag for any .mp3 audio clips
     sed -i.bak "/<!-- Begin -->/a <br />"$i"<br /><audio controls> <source src=\"/audio/$i\" type="audio/mp3"> Your browser does not support the audio tag. </audio>" index.html
 
@@ -17,7 +17,7 @@ for i in *.mp3; do
 done
 
 # add any new ogg vorbis files to the page
-for i in *.ogg; do
+for i in /home/sinc/audio/*.ogg; do
     # create an HTML5 audio tag for any .ogg audio clips
     sed -i.bak "/<!-- Begin -->/a <br />"$i"<br /><audio controls> <source src=\"/audio/$i\" type="audio/ogg"> Your browser does not support the audio tag. </audio>" index.html
 
@@ -27,4 +27,4 @@ for i in *.ogg; do
 done
 
 # move the updated index.html to the webroot
-cp /home/sinc/test/index.html /var/www/html/index.html
+cp /home/sinc/audio/index.html /var/www/html/index.html
