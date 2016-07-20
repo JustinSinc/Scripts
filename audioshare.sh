@@ -13,8 +13,8 @@ for i in $(find /home/sinc/audio/*.mp3 -type f -printf "%f\n" 2> /dev/null); do
     sed -i.bak "/<\!-- Begin -->/a <br />"$i"<br /><audio controls> <source src=\"/audio/$i\" type="audio/mp3"> Your browser does not support the audio tag. </audio>" /home/sinc/audio/index.html
 
     # move the audio file to the webroot and make it readable
-    mv $i /var/www/html/audio/
-    chmod 755 /var/www/html/audio/$i
+    mv "$i" /var/www/html/audio/
+    chmod 755 /var/www/html/audio/"$i"
 
 done
 
@@ -25,8 +25,8 @@ for i in $(find /home/sinc/audio/*.ogg -type f -printf "%f\n" 2> /dev/null); do
     sed -i.bak "/<\!-- Begin -->/a <br />"$i"<br /><audio controls> <source src=\"/audio/$i\" type="audio/ogg"> Your browser does not support the audio tag. </audio>" /home/sinc/audio/index.html
 
     # move the audio file to the webroot and make it readable
-    mv $i /var/www/html/audio/
-    chmod 755 /var/www/html/audio/$i
+    mv "$i" /var/www/html/audio/
+    chmod 755 /var/www/html/audio/"$i"
 
 done
 
