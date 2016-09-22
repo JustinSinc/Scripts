@@ -1,0 +1,3 @@
+# Okay, so I'm just kind of an idiot
+# But I finally figured out why certbot wasn't playing nice
+/usr/bin/env letsencrypt "certonly"
