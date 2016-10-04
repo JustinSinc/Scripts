@@ -1,0 +1,34 @@
+#!/bin/sh
+# a script, preferably launched with a .service file or rc.d, to enable optimal power-saving
+# settings on a Thinkpad X201T.
+echo 'min_power' | sudo tee '/sys/class/scsi_host/host0/link_power_management_policy';
+echo 'min_power' | sudo tee '/sys/class/scsi_host/host5/link_power_management_policy';
+echo 'min_power' | sudo tee '/sys/class/scsi_host/host3/link_power_management_policy';
+echo 'min_power' | sudo tee '/sys/class/scsi_host/host1/link_power_management_policy';
+echo 'min_power' | sudo tee '/sys/class/scsi_host/host4/link_power_management_policy';
+echo 'min_power' | sudo tee '/sys/class/scsi_host/host2/link_power_management_policy';
+echo '1500' | sudo tee '/proc/sys/vm/dirty_writeback_centisecs';
+echo 'auto' | sudo tee '/sys/bus/i2c/devices/i2c-3/device/power/control';
+echo 'auto' | sudo tee '/sys/bus/i2c/devices/i2c-4/device/power/control';
+echo 'auto' | sudo tee '/sys/bus/i2c/devices/i2c-1/device/power/control';
+echo 'auto' | sudo tee '/sys/bus/i2c/devices/i2c-2/device/power/control';
+echo 'auto' | sudo tee '/sys/bus/i2c/devices/i2c-0/device/power/control';
+echo 'auto' | sudo tee '/sys/bus/i2c/devices/i2c-5/device/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1f.6/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:19.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:ff:02.3/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1e.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:00.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:ff:02.1/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:ff:00.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1b.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:ff:02.2/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1f.2/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1a.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:16.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:ff:02.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:ff:00.1/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1f.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:1d.0/power/control';
+echo 'auto' | sudo tee '/sys/bus/pci/devices/0000:00:02.0/power/control';
+sudo ethtool -s enp0s25 wol d;
