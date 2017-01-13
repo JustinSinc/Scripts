@@ -1,5 +1,5 @@
 #!/bin/bash
-# a script to generate new discord musicbots for /r/CasualConversation kill and delete any existing musicbot instanc$
+# a script to generate new discord musicbots for /r/CasualConversation kill and delete any existing musicbot instances
 echo "Removing any existing bot instances..."
 
 for i in "$(docker ps | grep musicbot | cut -d " " -f1)"; do
