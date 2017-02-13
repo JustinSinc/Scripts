@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# display zpool stats
+echo -e "\nDisk used: $(zpool list | grep -v NAME | cut -d " " -f 6)/$(zpool list | grep -v NAME | cut -d " " -f 4)"
+
+# display dedup ratio
+echo -e "Deduplication ratio: $(zpool list | grep -v NAME | cut -d " " -f 30)"
+
+# display compression ratio
+echo -e "Compression ratio: $(zfs get compressratio zones | grep -v NAME | cut -d " " -f 5)\n"
+
+# display disk usage by zone
+disktemp=$(mktemp)
+echo "ZONE                                  AVAIL   USED  USEDSNAP  USEDDS  USEDREFRESERV  USEDCHILD"
+for i in $(vmadm list | grep -v "UUID" | cut -d " " -f1)
+        do zfs list -o space zones/"$i" | grep -v NAME | cut -c 7- >> $disktemp
+done
+sort < $disktemp
+
+
+# display memory usage by zone
+echo -e "\nZONE                                 Used(MB)  Max(MB)  NOVER  POUT(MB) SWAP%"
+echo -e "$(zonememstat | grep -v global | sort| grep -v ZONE | awk '{ sub(/^[ \t]+/, ""); print }')\n"
+
+# display overall memory usage
+echo -e "$(echo ::memstat | mdb -k | awk NF)\n"
+
+# display interface status
+echo -e "$(dladm show-phys)\n"
