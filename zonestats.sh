@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# bash best practices
+set -o errexit
+set -o pipefail
+set -o nounset
 
 # display storage information
 diskstats="$(zpool list | tail -n +2)"
