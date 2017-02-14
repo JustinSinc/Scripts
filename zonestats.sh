@@ -11,8 +11,8 @@ echo -e "Disk used: $(zpool list | tail -n +2 | cut -d " " -f 6)/$(zpool list | 
 echo -e "Deduplication ratio: $(zpool list | tail -n +2 | cut -d " " -f 30)"
 
 # display compression ratio
-echo -e "Compression ratio: $(zfs get compressratio zones | tail -n +2 | cut -d " " -f 5)\n"
-echo -e "--------------------------"
+echo -e "Compression ratio: $(zfs get compressratio zones | tail -n +2 | cut -d " " -f 5)"
+echo -e "--------------------------\n"
 
 # display disk usage by zone
 disktemp=$(mktemp)
