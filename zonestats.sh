@@ -11,7 +11,7 @@ echo -e "--------------------------\n"
 
 # display disk usage by zone
 disktemp=$(mktemp)
-echo "ZONE                                  AVAIL   USED"
+echo "Zone disk usage                       AVAIL   USED"
 echo "--------------------------------------------------"
 for i in $(vmadm list | tail -n +2 | cut -d " " -f1)
         do zfs list -o space zones/"$i" | tail -n +2 | cut -c 7-58 >> $disktemp
@@ -22,14 +22,14 @@ echo "--------------------------------------------------"
 # display memory usage by zone
 mem_used="$(zonememstat | tail -n +3 | sort | awk '{ sub(/^[ \t]+/, ""); print }' | awk '{s+=$2}END{print s}')"
 
-echo -e "\nZONE                                      Used    Max"
+echo -e "\nZone memory usage                         Used    Max"
 echo -e "-------------------------------------------------------"
 echo -e "$(zonememstat | tail -n +3 | sort | awk '{print $1"M     "$2"M     "$3"M"}')"
 echo -e "-------------------------------------------------------"
 echo -e "                             Total:       "$mem_used"\n"
 
 # display overall memory usage
-echo -e "Page Summary                Pages                MB  %Tot"
+echo -e "Page Summary                Pages                MB  Used"
 echo -e "---------------------------------------------------------"
 echo -e "$(echo ::memstat | mdb -k | tail -n +3 | awk NF | sed '$d' | sed '$d')"
 echo -e "---------------------------------------------------------"
