@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # display storage information
