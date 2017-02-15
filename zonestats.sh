@@ -5,6 +5,12 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# display system information
+hwinfo="$(prtconf)"
+vmlist="$(vmadm list)"
+echo -e "\nSmartOS running on a system with "$(echo "$hwinfo" | grep cpu | wc -l | sed 's/^[\t ]*//g')" CPU thread$
+echo -e "There are currently "$(echo "$vmlist" | grep OS | wc -l | sed 's/^[\t ]*//g')" Solaris zones and "$(echo $
+
 # display storage information
 diskstats="$(zpool list | tail -n +2)"
 echo -e "\nStorage info:"
@@ -48,8 +54,7 @@ memstats="$(echo ::memstat | mdb -k)"
 echo -e "Page Summary                Pages                MB  Used"
 echo -e "---------------------------------------------------------"
 echo -e "$(echo "$memstats" | tail -n +3 | awk NF | sed '$d' | sed '$d')"
-echo -e "---------------------------------------------------------"
-echo -e "$(echo "$memstats" | grep Total)\n"
+echo -e "---------------------------------------------------------\n"
 
 # display interface status
 echo -e "LINK         MEDIA                STATE      SPEED  DUPLEX    DEVICE"
