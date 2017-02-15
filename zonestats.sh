@@ -6,10 +6,10 @@ set -o pipefail
 set -o nounset
 
 # display system information
-hwinfo="$(prtconf)"
+hwinfo="$(sysinfo)"
 vmlist="$(vmadm list)"
-echo -e "\nSmartOS running on a system with "$(echo "$hwinfo" | grep cpu | wc -l | sed 's/^[\t ]*//g')" CPU thread$
-echo -e "There are currently "$(echo "$vmlist" | grep OS | wc -l | sed 's/^[\t ]*//g')" Solaris zones and "$(echo $
+echo -e "\nSmartOS is running on a "$(echo "$hwinfo" | grep Product | cut -d "\"" -f 4)" with "$(echo "$hwinfo" | grep Total | cut -d " " -f6 | sed 's/\,//g')" CPU threads and "$(echo "$hwinfo" | grep MiB | cut -d "\"" -f4)" megabytes of memory."
+echo -e "There are currently "$(echo "$vmlist" | grep OS | wc -l | sed 's/^[\t ]*//g')" Solaris zones, "$(echo "$vmlist" | grep LX | wc -l | sed 's/^[\t ]*//g')" LX containers, and "$(echo "$vmlist" | grep KVM | wc -l | sed 's/^[\t ]*//g')" KVM guests."
 
 # display storage information
 diskstats="$(zpool list | tail -n +2)"
