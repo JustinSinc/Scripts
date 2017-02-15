@@ -29,7 +29,7 @@ zone_mem="$(zonememstat | tail -n +3 | sort)"
 mem_used="$(echo "$zone_mem" | awk '{ sub(/^[ \t]+/, ""); print }' | awk '{s+=$2}END{print s}')"
 
 memtemp="$(mktemp)"
-if [ "$mem_used" -ge "1000" ]; then
+if [ "$mem_used" -ge "1024" ]; then
   echo "$(echo "scale=2; "$mem_used" / 1024" | bc )"G > "$memtemp"
 else
   echo "$mem_used"M > "$memtemp"
