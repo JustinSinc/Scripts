@@ -27,11 +27,21 @@ echo "--------------------------------------------------"
 # display memory usage by zone
 zone_mem="$(zonememstat | tail -n +3 | sort)"
 mem_used="$(echo "$zone_mem" | awk '{ sub(/^[ \t]+/, ""); print }' | awk '{s+=$2}END{print s}')"
+
+memtemp="$(mktemp)"
+if [ "$mem_used" -ge "1000" ]; then
+  echo "$(echo "scale=2; "$mem_used" / 1024" | bc )"G > "$memtemp"
+else
+  echo "$mem_used"M > "$memtemp"
+fi
+
+mem_used="$(< "$memtemp")"
+
 echo -e "\nZone memory usage                         Used    Max"
 echo -e "-------------------------------------------------------"
 echo -e "$(echo "$zone_mem" | awk '{print $1"M     "$2"M     "$3"M"}')"
 echo -e "-------------------------------------------------------"
-echo -e "                             Total:       "$mem_used"\n"
+echo -e "                               Total:    "$mem_used"\n"
 
 # display overall memory usage
 memstats="$(echo ::memstat | mdb -k)"
