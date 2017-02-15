@@ -51,7 +51,7 @@ echo -e "                               Total:    "$mem_used"\n"
 
 # display overall memory usage
 memstats="$(echo ::memstat | mdb -k)"
-echo -e "Page Summary                Pages                MB  Used"
+echo -e "Page summary                Pages                MB  Used"
 echo -e "---------------------------------------------------------"
 echo -e "$(echo "$memstats" | tail -n +3 | awk NF | sed '$d' | sed '$d')"
 echo -e "---------------------------------------------------------\n"
