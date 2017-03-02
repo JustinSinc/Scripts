@@ -45,7 +45,7 @@ mem_used="$(< "$memtemp")"
 
 echo -e "\nZone memory usage                         Used    Max"
 echo -e "-------------------------------------------------------"
-echo -e "$(echo "$zone_mem" | awk '{print $1"M     "$2"M     "$3"M"}')"
+echo -e "$(echo "$zone_mem" | awk '{print $1"      "$2"M     "$3"M"}')"
 echo -e "-------------------------------------------------------"
 echo -e "                               Total:    "$mem_used"\n"
 
