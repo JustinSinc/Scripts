@@ -14,14 +14,14 @@ inside_port="$5"
 set -euo pipefail
 
 # if no arguments are supplied, help the user out
-if [ $# -eq 0 ];
+if [ "$#" -eq 0 ];
 	then echo -e "\nBridge subnet: "$bridge_subnet"\n"
 		 echo -e "Active containers:"
 		 echo -e "$(lxc list | grep RUNNING | cut -d "|" -f 2-4)\n"
 fi
 
 # make sure there are the correct number of arguments
-if [ $# -ne 5 ];
+if [ "$#" -ne 5 ];
 	then echo -e "Usage: forward <add|del> <tcp|ip> <outside port> <destination address> <inside port>\n"
 	exit
 fi
