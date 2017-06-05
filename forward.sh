@@ -22,7 +22,7 @@ fi
 
 # make sure there are the correct number of arguments
 if [ "$#" -ne 5 ];
-	then echo -e "Usage: forward <add|del> <tcp|ip> <outside port> <destination address> <inside port>\n"
+	then echo -e "Usage: forward <add|del> <tcp|udp> <outside port> <destination address> <inside port>\n"
 	exit
 fi
 
