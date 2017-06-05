@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# exposes applications on port 8080 using GoTTY and docker
+# exposes applications on an arbitrary port using GoTTY and docker
 
 # exit if a command fails
 set -o errexit
