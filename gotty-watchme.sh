@@ -1,7 +1,4 @@
-#!/usr/bin/env/bash
-
-# kill any existing GoTTYs
-#pkill gotty
+#!/usr/bin/env bash
 
 # spawn new GoTTY session in a tmux session named "watchme"
 tmux has-session -t watchme || tmux new-session -d -s watchme
