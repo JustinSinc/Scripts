@@ -37,4 +37,4 @@ kmem_limit="64m"
 
 # create a tmux session to run in
 tmux has-session -t tryme || tmux new-session -d -s tryme
-tmux send -t tryme "gotty --credential "$gotty_user":"$gotty_pass" --port "$gotty_port" -w -- docker run --interactive --tty --rm --cpus="$cpu_limit" --memory="$mem_limit" --memory-swap="$swap_limit" --kernel-memory="$kmem_limit" -- alpine:latest /bin/ash" && tmux send-key Enter
+tmux send -t tryme "gotty --title-format "Try Me!" --credential "$gotty_user":"$gotty_pass" --port "$gotty_port" -w -- docker run --interactive --tty --rm --cpus="$cpu_limit" --memory="$mem_limit" --memory-swap="$swap_limit" --kernel-memory="$kmem_limit" -- alpine:latest /bin/ash" && tmux send-key Enter
