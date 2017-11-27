@@ -2,18 +2,17 @@
 # script to deprovision epon onts
 
 # set required variables
-title="EPON deprovisioning script"
 olt=("gmn-evr-eolt1" "gmn-evr-eolt2" "gmn-pone-eolt1" "Quit")
 confirm=("Yes" "No")
 
 # clear screen
 clear
 
-# display script title
-echo -e "\n $title \n"
+# prompt for olt choice
+echo -e "\nSelect an OLT"
 
 # set prompt
-PS3="Select an OLT:"
+PS3="->"
 
 # prompt for olt choice
 select olt_choice in "${olt[@]}"; do
@@ -45,7 +44,7 @@ elif [ "$check" -ne 12 ];
 fi
 
 # set blank prompt
-PS3=''
+PS3='->'
 
 # confirm selected command
 echo -e "\nYou're deprovisioning "$ont_mac" on "$olt_choice". Is that correct?\n"
