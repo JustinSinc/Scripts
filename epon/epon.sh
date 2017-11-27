@@ -3,7 +3,7 @@
 
 # set required variables
 title="EPON config menu"
-olt=("Provision new ONT" "Swap ONT" "Deprovision ONT" "Quit")
+actions=("Provision new ONT" "Swap ONT" "Deprovision ONT" "Quit")
 confirm=("Yes" "No")
 
 # clear screen
@@ -15,8 +15,8 @@ echo -e "\n $title \n"
 # set prompt
 PS3="Select an action: "
 
-# prompt for olt choice
-select desired_action in "${olt[@]}"; do
+# prompt for action
+select desired_action in "${actions[@]}"; do
   case "$desired_action" in
     "Provision new ONT")
       epoc; break;;
