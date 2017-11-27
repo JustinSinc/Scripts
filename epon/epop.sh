@@ -11,7 +11,7 @@ clear
 PS3="->"
 
 # prompt for old mac address
-echo -e "Enter old ONT MAC address, or type \`quit\` to quit: "
+echo -e "\nEnter old ONT MAC address, or type \`quit\` to quit: "
 read old_mac
 
 # check for quit
