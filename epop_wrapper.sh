@@ -11,7 +11,7 @@ clear
 # display script title
 echo -e "\n $title \n"
 
-# prompt for olt mac address
+# prompt for old mac address
 echo -e "Enter old ONT MAC address, or type \`quit\` to quit: "
 read old_mac
 
@@ -22,23 +22,19 @@ if [ "$old_mac" = "quit" ];
 elif [ "$check_old" -ne 12 ];
   then echo "MAC address must be 12 characters.";
   exit;
-else
-  echo "Old MAC is "$old_mac";
 fi
 
-# prompt for gmn account
+# prompt for new mac address
 echo -e "\nEnter new ONT MAC address, or type \`quit\` to quit: "
 read new_mac
 
-# check for correct length of mac address
+# check for quit or incorrect mac address length
 check_new="${#new_mac}"
 if [ "$new_mac" = "quit" ];
   then exit;
-elif [ "$check" -ne 12 ];
+elif [ "$check_new" -ne 12 ];
   then echo "MAC address must be 12 characters.";
   exit;
-else
-  echo "New MAC is "$new_mac";
 fi
 
 # set blank prompt
