@@ -16,21 +16,29 @@ echo -e "Enter old ONT MAC address, or type \`quit\` to quit: "
 read old_mac
 
 # check for quit
+check_old="${#old_mac}"
 if [ "$old_mac" = "quit" ];
-  then exit
+  then exit;
+elif [ "$check_old" -ne 12 ];
+  then echo "MAC address must be 12 characters.";
+  exit;
 else
-  echo "Old MAC is "$old_mac"
+  echo "Old MAC is "$old_mac";
 fi
 
 # prompt for gmn account
 echo -e "\nEnter new ONT MAC address, or type \`quit\` to quit: "
 read new_mac
 
-# check for quit
+# check for correct length of mac address
+check_new="${#new_mac}"
 if [ "$new_mac" = "quit" ];
-  then exit
+  then exit;
+elif [ "$check" -ne 12 ];
+  then echo "MAC address must be 12 characters.";
+  exit;
 else
-  echo "New MAC is "$new_mac"
+  echo "New MAC is "$new_mac";
 fi
 
 # set blank prompt
