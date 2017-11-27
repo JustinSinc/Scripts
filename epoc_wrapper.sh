@@ -27,7 +27,7 @@ select olt_choice in "${olt[@]}"; do
     "gmn-pone-eolt1")
       final_olt="$olt_choice"; break;;
     "Quit")
-      echo "Exiting..."; break;;
+      echo "Exiting..."; exit;;
     *)
       echo "Invalid option. Try again."; continue;;
   esac
@@ -66,7 +66,7 @@ select service_choice in "${service[@]}"; do
     "svlan")
       final_service="$service_choice"; break;;
     "Quit") 
-       echo "Exiting..."; break;;
+       echo "Exiting..."; exit;;
      *)
        echo "Invalid option. Try again."; continue;;
   esac
@@ -91,7 +91,7 @@ select speed_choice in "${speed[@]}"; do
     "100")
       final_speed="$speed_choice"; break;;
     "Quit")
-      echo "Exiting..."; break;;
+      echo "Exiting..."; exit;;
     *)
       echo "Invalid option. Try again."; continue;;
   esac
@@ -114,9 +114,9 @@ select confirmation in "${confirm[@]}"; do
     "Yes")
       echo -e "\nConfiguring ONT..."; ssh intranet epoc "$final_olt" "$final_mac" "$final_acct" "$final_service" "$final_speed"; break;;
     "No")
-      echo "Quitting..."; break;;
+      echo "Exiting..."; exit;;
     *)
-      echo "Invalid option. Quitting."; break;;
+      echo "Invalid option. Exiting."; exit;;
   esac
 
 done
