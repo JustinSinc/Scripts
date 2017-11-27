@@ -40,6 +40,13 @@ clear
 echo -e "\nEnter ONT MAC address: "
 read final_mac
 
+# check for correct length of mac address
+check="${#final_mac}"
+if [ "$check" -ne 12 ];
+  then echo "MAC address must be 12 characters.";
+  exit;
+fi
+
 # clear screen
 clear
 
