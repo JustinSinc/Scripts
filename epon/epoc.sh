@@ -2,7 +2,6 @@
 # script to configure epon onts
 
 # set required variables
-title="EPON configuration script"
 olt=("gmn-evr-eolt1" "gmn-evr-eolt2" "gmn-pone-eolt1" "Quit")
 service=("data" "datatv" "svlan" "Quit")
 speed=("70" "100" "Quit")
