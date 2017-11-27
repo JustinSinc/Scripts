@@ -25,7 +25,7 @@ select desired_action in "${olt[@]}"; do
     "Deprovision ONT")
       epou; break;;
     "Quit")
-      echo "Exiting..."; quit;;
+      echo "Exiting..."; exit;;
     *)
       echo "Invalid option. Try again."; continue;;
   esac
