@@ -31,9 +31,18 @@ select olt_choice in "${olt[@]}"; do
   esac
 done
 
-# prompt for gmn account
-echo -e "\nEnter ONT MAC address: "
+# prompt for ont mac address
+echo -e "Enter ONT MAC address, or type \`quit\` to quit: "
 read ont_mac
+
+# check for quit or incorrect mac address length
+check="${#ont_mac}"
+if [ "$ont_mac" = "quit" ];
+  then exit;
+elif [ "$check" -ne 12 ];
+  then echo "MAC address must be 12 characters.";
+  exit;
+fi
 
 # set blank prompt
 PS3=''
