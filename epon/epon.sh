@@ -10,7 +10,7 @@ confirm=("Yes" "No")
 clear
 
 # display script title
-echo -e "\n $title \n"
+echo -e "\n $title"
 
 # set prompt
 PS3="Select an action: "
