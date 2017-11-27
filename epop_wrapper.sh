@@ -32,9 +32,9 @@ select confirmation in "${confirm[@]}"; do
     "Yes")
       echo "Swapping ONTs..."; ssh intranet epop "$old_mac" "$new_mac"; break;;
     "No")
-      echo "Quitting..."; break;;
+      echo "Quitting..."; exit;;
     *)
-      echo "Invalid option. Quitting."; break;;
+      echo "Invalid option. Exiting..."; exit;;
   esac
 
 done
