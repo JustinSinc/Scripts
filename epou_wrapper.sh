@@ -25,7 +25,7 @@ select olt_choice in "${olt[@]}"; do
     "gmn-pone-eolt1")
       final_olt="$olt_choice"; break;;
     "Quit")
-      echo "Exiting..."; break;;
+      echo "Exiting..."; exit;;
     *)
       echo "Invalid option. Try again."; continue;;
   esac
@@ -48,9 +48,9 @@ select confirmation in "${confirm[@]}"; do
     "Yes")
       echo "Deprovisioning ONT..."; ssh intranet epou "$olt_choice" "$ont_mac"; break;;
     "No")
-      echo "Quitting..."; break;;
+      echo "Exiting..."; exit;;
     *)
-      echo "Invalid option. Quitting."; break;;
+      echo "Invalid option. Exiting..."; exit;;
   esac
 
 done
