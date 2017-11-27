@@ -10,10 +10,10 @@ confirm=("Yes" "No")
 clear
 
 # display script title
-echo -e "\n $title"
+echo -e "\n$title"
 
 # set prompt
-PS3="Select an action: "
+PS3="->"
 
 # prompt for action
 select desired_action in "${actions[@]}"; do
