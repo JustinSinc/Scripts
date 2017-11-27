@@ -51,7 +51,7 @@ select confirmation in "${confirm[@]}"; do
     "Yes")
       echo "Swapping ONTs..."; ssh intranet epop "$old_mac" "$new_mac"; break;;
     "No")
-      echo "Quitting..."; exit;;
+      echo "Exiting..."; exit;;
     *)
       echo "Invalid option. Try again."; continue;;
   esac
