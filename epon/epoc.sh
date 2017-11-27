@@ -112,9 +112,6 @@ clear
 # confirm selected command
 echo -e "\nSelected command is \`epoc "$final_olt" "$final_mac" "$final_acct" "$final_service" "$final_speed"\`. Is that correct?"
 
-# set prompt
-PS3="->"
-
 # prompt for final confirmation
 select confirmation in "${confirm[@]}"; do
 
