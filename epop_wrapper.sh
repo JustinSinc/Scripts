@@ -12,12 +12,26 @@ clear
 echo -e "\n $title \n"
 
 # prompt for olt mac address
-echo -e "Enter old ONT MAC address: "
+echo -e "Enter old ONT MAC address, or type \`quit\` to quit: "
 read old_mac
 
+# check for quit
+if [ "$old_mac" = "quit" ];
+  then exit
+else
+  echo "Old MAC is "$old_mac"
+fi
+
 # prompt for gmn account
-echo -e "\nEnter new ONT MAC address: "
+echo -e "\nEnter new ONT MAC address, or type \`quit\` to quit: "
 read new_mac
+
+# check for quit
+if [ "$new_mac" = "quit" ];
+  then exit
+else
+  echo "New MAC is "$new_mac"
+fi
 
 # set blank prompt
 PS3=''
