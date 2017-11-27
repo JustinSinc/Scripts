@@ -5,16 +5,15 @@
 olt=("gmn-evr-eolt1" "gmn-evr-eolt2" "gmn-pone-eolt1" "Quit")
 confirm=("Yes" "No")
 
+# set prompt
+PS3="->"
+
 # clear screen
 clear
 
 # prompt for olt choice
 echo -e "\nSelect an OLT"
 
-# set prompt
-PS3="->"
-
-# prompt for olt choice
 select olt_choice in "${olt[@]}"; do
   case "$olt_choice" in
     "gmn-evr-eolt1")
@@ -30,8 +29,11 @@ select olt_choice in "${olt[@]}"; do
   esac
 done
 
+# clear screen
+clear
+
 # prompt for ont mac address
-echo -e "Enter ONT MAC address, or type \`quit\` to quit: "
+echo -e "\nEnter ONT MAC address, or type \`quit\` to quit: "
 read ont_mac
 
 # check for quit or incorrect mac address length
@@ -43,15 +45,11 @@ elif [ "$check" -ne 12 ];
   exit;
 fi
 
-# set blank prompt
-PS3='->'
-
 # confirm selected command
 echo -e "\nYou're deprovisioning "$ont_mac" on "$olt_choice". Is that correct?\n"
 
 # prompt for final confirmation
 select confirmation in "${confirm[@]}"; do
-
   case "$confirmation" in
     "Yes")
       echo "Deprovisioning ONT..."; ssh intranet epou "$olt_choice" "$ont_mac"; break;;
@@ -60,5 +58,4 @@ select confirmation in "${confirm[@]}"; do
     *)
       echo "Invalid option. Try again."; continue;;
   esac
-
 done
