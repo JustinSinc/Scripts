@@ -35,7 +35,7 @@ done
 clear
 
 # prompt for ont mac address
-echo -e "Enter ONT MAC address, or type \`quit\` to quit: "
+echo -e "\nEnter ONT MAC address, or type \`quit\` to quit: "
 read final_mac
 
 # check for quit or incorrect mac address length
@@ -61,7 +61,6 @@ clear
 echo -e "\nSelect a service type:"
 
 select service_choice in "${service[@]}"; do
-
   case "$service_choice" in
     "data")
       final_service="$service_choice"; break;;
@@ -74,7 +73,6 @@ select service_choice in "${service[@]}"; do
      *)
        echo "Invalid option. Try again."; continue;;
   esac
-
 done
   
 # clear screen
@@ -84,7 +82,6 @@ clear
 echo -e "\nSelect a service speed:"
 
 select speed_choice in "${speed[@]}"; do
-
   case "$speed_choice" in
     "70")
       final_speed="$speed_choice"; break;;
@@ -95,7 +92,6 @@ select speed_choice in "${speed[@]}"; do
     *)
       echo "Invalid option. Try again."; continue;;
   esac
-
 done
 
 # clear screen
@@ -106,7 +102,6 @@ echo -e "\nSelected command is \`epoc "$final_olt" "$final_mac" "$final_acct" "$
 
 # prompt for final confirmation
 select confirmation in "${confirm[@]}"; do
-
   case "$confirmation" in
     "Yes")
       echo -e "\nConfiguring ONT..."; ssh intranet epoc "$final_olt" "$final_mac" "$final_acct" "$final_service" "$final_speed"; break;;
@@ -115,5 +110,4 @@ select confirmation in "${confirm[@]}"; do
     *)
       echo "Invalid option. Try again."; continue;;
   esac
-
 done
