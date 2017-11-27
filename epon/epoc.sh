@@ -61,8 +61,6 @@ clear
 # set title
 echo -e "\nSelect a service type:"
 
-# set prompt
-PS3="->"
 # prompt for service type
 select service_choice in "${service[@]}"; do
 
@@ -86,9 +84,6 @@ clear
 
 # set title
 echo -e "\nSelect a service speed:"
-
-# set prompt
-PS3="->"
 
 # prompt for service speed
 select speed_choice in "${speed[@]}"; do
