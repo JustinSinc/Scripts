@@ -34,7 +34,7 @@ select confirmation in "${confirm[@]}"; do
     "No")
       echo "Quitting..."; exit;;
     *)
-      echo "Invalid option. Exiting..."; exit;;
+      echo "Invalid option. Try again."; continue;;
   esac
 
 done
