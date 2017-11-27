@@ -10,7 +10,7 @@ confirm=("Yes" "No")
 # clear screen
 clear
 
-# display script title
+# prompt for olt choice
 echo -e "\nSelect an OLT"
 
 # set prompt
