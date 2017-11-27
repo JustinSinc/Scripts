@@ -36,13 +36,15 @@ done
 # clear screen
 clear
 
-# prompt for olt mac address
-echo -e "\nEnter ONT MAC address: "
+# prompt for ont mac address
+echo -e "Enter ONT MAC address, or type \`quit\` to quit: "
 read final_mac
 
-# check for correct length of mac address
+# check for quit or incorrect mac address length
 check="${#final_mac}"
-if [ "$check" -ne 12 ];
+if [ "$final_mac" = "quit" ];
+  then exit;
+elif [ "$check" -ne 12 ];
   then echo "MAC address must be 12 characters.";
   exit;
 fi
