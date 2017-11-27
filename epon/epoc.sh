@@ -7,16 +7,15 @@ service=("data" "datatv" "svlan" "Quit")
 speed=("70" "100" "Quit")
 confirm=("Yes" "No")
 
+# set prompt
+PS3="->"
+
 # clear screen
 clear
 
 # prompt for olt choice
 echo -e "\nSelect an OLT"
 
-# set prompt
-PS3="->"
-
-# prompt for olt choice
 select olt_choice in "${olt[@]}"; do
   case "$olt_choice" in
     "gmn-evr-eolt1")
@@ -58,10 +57,9 @@ read final_acct
 # clear screen
 clear
 
-# set title
+# prompt for service type
 echo -e "\nSelect a service type:"
 
-# prompt for service type
 select service_choice in "${service[@]}"; do
 
   case "$service_choice" in
@@ -82,10 +80,9 @@ done
 # clear screen
 clear
 
-# set title
+# prompt for service speed
 echo -e "\nSelect a service speed:"
 
-# prompt for service speed
 select speed_choice in "${speed[@]}"; do
 
   case "$speed_choice" in
