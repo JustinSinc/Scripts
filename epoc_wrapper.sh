@@ -116,7 +116,7 @@ select confirmation in "${confirm[@]}"; do
     "No")
       echo "Exiting..."; exit;;
     *)
-      echo "Invalid option. Exiting."; exit;;
+      echo "Invalid option. Try again."; continue;;
   esac
 
 done
