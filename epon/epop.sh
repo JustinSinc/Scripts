@@ -2,14 +2,13 @@
 # script to swap epon onts
 
 # set required variables
-title="EPON swapping script"
 confirm=("Yes" "No")
 
 # clear screen
 clear
 
-# display script title
-echo -e "\n $title \n"
+# set prompt
+PS3="->"
 
 # prompt for old mac address
 echo -e "Enter old ONT MAC address, or type \`quit\` to quit: "
