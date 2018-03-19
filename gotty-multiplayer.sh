@@ -59,6 +59,6 @@ tmux select-window -t tryme:2
 tmux send-keys "gotty --title-format 'Multiplayer Sysadmin!' --credential "$gotty_user":"$gotty_pass" --port "$gotty_port" -w -- docker attach tryme" C-m
 echo "Launched GoTTY..."
 
-# attach to the first session for setup as needed
+# attach to the docker container to join the fun
 tmux select-window -t tryme:1
 tmux -2 attach-session -t tryme
