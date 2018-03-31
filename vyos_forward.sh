@@ -1,6 +1,6 @@
 #!/bin/vbash
 
-if [ "$#" -ne 6 ]; then
+if [ "$#" -lt 6 ]; then
 	echo "Usage: forward <rule> <internal ip> <external port> <internal port> <tcp|udp> <desc>"
 	exit
 fi
