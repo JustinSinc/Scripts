@@ -29,7 +29,7 @@ REM first octet cannot be below 1
 if %octet1% LSS 1 set _invalid=1
 
 REM remaining octets cannot be below 0
-for %%o in (%octet2% %octet3% %octet4%) do (if %%o LSS 1 set _invalid=1)
+for %%o in (%octet2% %octet3% %octet4%) do (if %%o LSS 0 set _invalid=1)
 
 REM octets cannot be over 255
 for %%p in (%octet2% %octet3% %octet4%) do (IF %%p GTR 255 set _invalid=1)
