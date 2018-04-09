@@ -1,6 +1,7 @@
 @echo off
 REM Thanks to user MC ND on stackoverflow.com (https://stackoverflow.com/questions/24906268/ping-with-timestamp) for the original template
 REM A script to output timestamped pings to a file on the user's desktop
+REM TODO: Support hostname lookup
 
 REM if no arguments were passed, print the command syntax
 IF [%1]==[] echo Usage: drops ^<ip_address^> & exit /b
