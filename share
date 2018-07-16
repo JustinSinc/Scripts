@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# creates a public "multiplayer" tty session using docker, GoTTY, and tmux
+
+# exit if a command fails
+set -o errexit
+
+# exit if required variables aren't set
+set -o nounset
+
+# return the exit status of the final command before a failure
+set -o pipefail
+
+# make sure exactly one argument was passed
+if [ "$#" -ne 1 ];
+        then echo -e "\nUsage: gotty-multiplayer <command>\n";
+    exit 1;
+fi
+
+# kill any existing multiplayer session, and start a new one
+tmux has-session -t tryme && tmux kill-session -t tryme && echo "Killed old tmux session..." 2>&1 >/dev/null
+tmux -2 new-session -d -s tryme
+echo "Created new tmux session..."
+
+# create a tmux session, and run the command in it
+tmux new-window -t tryme:1 -n "$1"
+tmux select-window -t tryme:0
+tmux send-keys "gotty -- tmux -2 attach-session -t tryme" C-m
+echo "Launched GoTTY..."
+
+# attach to the docker container to join the fun
+tmux select-window -t tryme:1
+tmux send-keys "$1" C-m
+tmux -2 attach-session -t tryme
