@@ -19,10 +19,12 @@ fi
 
 # create a temporary file to store the processed text
 tempfile="$(mktemp)"
-echo "Storing output in tempfile "$tempfile"..."
 
 # wrap the script into a function for logging purposes
 {
+
+# display location of temp file for debugging purposes
+echo "Storing output in tempfile "$tempfile"..."
 
 # give input a variable name for readability
 input="$1"
