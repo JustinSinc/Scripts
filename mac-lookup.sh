@@ -17,8 +17,14 @@ if [ "$#" -ne 1 ]; then
 	exit 1;
 fi
 
+# set log file location
+logfile="mac-lookup.log"
+
 # create a temporary file to store the processed text
 tempfile="$(mktemp)"
+
+# prepend timestamp to logfile
+echo -e "\nScript execution began at $(date +%Y/%m/%d-%H:%M)." >> "$logfile" 2>&1
 
 # wrap the script into a function for logging purposes
 {
@@ -70,8 +76,11 @@ while read -r i; do
 	echo -e  "$port\t$mac\t$vendor" >> "$tempfile"
 done < "$input"
 
-# end function
-} 2>&1 | tee -a mac-lookup.log >/dev/null
+# end function, writing all output to the specific logfile
+} 2>&1 | tee -a "$logfile" >/dev/null
+
+# append timestamp to logfile
+echo -e "Script execution finished at $(date +%Y/%m/%d-%H:%M).\n" >> "$logfile"
 
 # display the sorted list
 sort -V "$tempfile"
