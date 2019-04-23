@@ -73,7 +73,7 @@ while read -r i; do
 	vendor="$(cat "$vendor_temp")"          # store the vendor id in a variable
 	
 	# store the processed output in the previously-created tempfile
-	echo -e  "$port\t$vlan\t$mac\t$vendor" >> "$tempfile"
+	echo -e "$port\t$vlan\t$mac\t$vendor" >> "$tempfile"
 done < "$input"
 
 # end function, writing all output to the specific logfile
