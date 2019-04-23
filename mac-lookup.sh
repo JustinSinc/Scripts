@@ -76,7 +76,7 @@ while read -r i; do
 	echo -e "$port\t$vlan\t$mac\t$vendor" >> "$tempfile"
 done < "$input"
 
-# end function, writing all output to the specific logfile
+# end function, writing all output to the specified logfile
 } 2>&1 | tee -a "$logfile" >/dev/null
 
 # append timestamp to logfile
