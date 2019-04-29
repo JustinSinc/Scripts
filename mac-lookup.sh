@@ -70,21 +70,21 @@ while read -r i; do
 	
 	# convert mac address from second column into oui format (first six characters, all uppercase)
 	oui_temp="$(mktemp)"					# create a tempfile to store the processed oui
-	echo "$i" |								# display the line for parsing
-	awk '{print $2}' |						# display only second column (mac address)
-	sed 's/\.//g' |						 	# remove all periods from the string
+	echo "$i" |						# display the line for parsing
+	awk '{print $2}' |					# display only second column (mac address)
+	sed 's/\.//g' |					 	# remove all periods from the string
 	awk '{print toupper($0)}' |			 	# convert all alphabetic characters to uppercase
-	cut -c "1-6" |							# only display the first six characters
-	fold -w2 |								# split the string into groups of two characters each
-	paste -sd'-' - >> "$oui_temp"			# insert a `-` delimiter between those groups, per oui format
+	cut -c "1-6" |						# only display the first six characters
+	fold -w2 |						# split the string into groups of two characters each
+	paste -sd'-' - >> "$oui_temp"				# insert a `-` delimiter between those groups, per oui format
 	oui="$(cat "$oui_temp")"				# store the oui in a variable
 	
 	# match the newly parsed oui with the vendor name, retrieved from the oui database
 	vendor_temp="$(mktemp)"				 	# create a tempfile to store the processed vendor id
 	grep "$oui" oui.txt |					# find the relevant line in the oui database
-	awk '{$1=$2=""; print $0}' |			# strip the hex oui string and format type columns
-	awk '{$1=$1;print}' >> "$vendor_temp"	# strip leading whitespace
-	vendor="$(cat "$vendor_temp")"			# store the vendor id in a variable
+	awk '{$1=$2=""; print $0}' |				# strip the hex oui string and format type columns
+	awk '{$1=$1;print}' >> "$vendor_temp"			# strip leading whitespace
+	vendor="$(cat "$vendor_temp")"				# store the vendor id in a variable
 	
 	# store the processed output in the previously-created tempfile
 	echo -e	"$port\t$vlan\t$mac\t$vendor" >> "$tempfile"
