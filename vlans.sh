@@ -38,8 +38,8 @@ fi
 readVlans() {
 	vlans=()
 	while IFS= read -r line; do
-	[[ $line ]] || break
-	vlans+=("$line")
+		[[ $line ]] || break
+		vlans+=("$line")
 	done
 }
 
