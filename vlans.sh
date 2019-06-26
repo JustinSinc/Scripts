@@ -28,6 +28,12 @@ else
 	exit 1
 fi
 
+# check if the vlan kernel module is loaded
+if !(grep 8021q /proc/modules >/dev/null 2>&1); then
+	echo -e "8021q module not loaded.\n"
+	exit 1
+fi
+
 # function to read input vlans and store as an array
 readVlans() {
 	vlans=()
