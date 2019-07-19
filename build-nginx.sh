@@ -8,6 +8,10 @@ LATESTNGINX="1.17.1"
 # choose where to put the build files
 BUILDROOT="$HOME/nginx-edge"
 
+# choose what software and version the server will report as
+SERVER="GNU Netcat"
+VERSION="0.7.1"
+
 # set core count for make
 core_count="$(grep -c ^processor /proc/cpuinfo)"
 
@@ -71,9 +75,9 @@ tar xzf "nginx-$LATESTNGINX.tar.gz"
 cd "$BUILDROOT/nginx/nginx-$LATESTNGINX"
 
 # change the nginx server name strings
-sed -i 's/ngx_http_server_string\[\].*/ngx_http_server_string\[\] = "Server: GNU Netcat" CRLF;/' $BUILDROOT/nginx/nginx-$LATESTNGINX/src/http/ngx_http_header_filter_module.c
-sed -i 's/ngx_http_server_full_string\[\].*/ngx_http_server_full_string\[\] = "Server: GNU Netcat 0.7.1" CRLF;/' $BUILDROOT/nginx/nginx-$LATESTNGINX/src/http/ngx_http_header_filter_module.c
-sed -i 's/ngx_http_server_build_string\[\].*/ngx_http_server_build_string\[\] = "Server: GNU Netcat 0.7.1" CRLF;/' $BUILDROOT/nginx/nginx-$LATESTNGINX/src/http/ngx_http_header_filter_module.c
+sed -i "s#ngx_http_server_string\[\].*#ngx_http_server_string\[\] = \"Server: $SERVER\" CRLF;#" $BUILDROOT/nginx/nginx-$LATESTNGINX/src/http/ngx_http_header_filter_module.c
+sed -i "s#ngx_http_server_full_string\[\].*#ngx_http_server_full_string\[\] = \"Server: $SERVER $VERSION\" CRLF;#" $BUILDROOT/nginx/nginx-$LATESTNGINX/src/http/ngx_http_header_filter_module.c
+sed -i "s#ngx_http_server_build_string\[\].*#ngx_http_server_build_string\[\] = \"Server: $SERVER $VERSION\" CRLF;#" $BUILDROOT/nginx/nginx-$LATESTNGINX/src/http/ngx_http_header_filter_module.c
 
 # fetch the fancy-index module
 git clone https://github.com/aperezdc/ngx-fancyindex.git "$BUILDROOT"/ngx-fancyindex
