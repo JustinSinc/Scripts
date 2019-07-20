@@ -2,6 +2,9 @@
 # a script to build nginx against openssl-dev on ubuntu/debian/arch linux/alpine linux
 # includes nginx fancyindex, rtmp, and headers-more modules
 
+# you can skip a given dependency check by setting the `skipdeps` environment variable
+# i.e. `skipdeps=golang,gnupg ./build-nginx.sh`
+
 # select the nginx version to build
 LATESTNGINX="1.17.1"
 
@@ -15,6 +18,25 @@ VERSION="0.7.1"
 # set core count for make
 core_count="$(grep -c ^processor /proc/cpuinfo)"
 
+# if the user is skipping dependency checks, warn them
+if [ -z "$skipdeps" ]; then 
+	true
+else
+	# prompt for user acknowledgement
+	echo -e "\nYou appear to be skipping a dependency check."
+	echo "Please be VERY careful, as this may cause the build to fail, or generate corrupt binaries."
+	read -p $'If you are sure you still want to run this script, please type ACCEPT and press Enter.\n\n' acknowledgement
+
+	# if the user acknowledges, begin the build
+	if [ "$acknowledgement" = "ACCEPT" ]; then
+		echo -e ""
+	# otherwise, exit with error
+	else
+		echo -e "\nExiting script...\n"
+		exit 1
+	fi
+fi 
+
 # if pacman is installed, use the arch dependencies
 if command -v pacman 2>&1 >/dev/null; then
 	# create array of dependencies
@@ -22,8 +44,12 @@ if command -v pacman 2>&1 >/dev/null; then
 
 	# check if dependencies are installed; if not, list the missing dependencies. if not available for the current os, error out
 	for dependency in "${dependencies[@]}"; do
-		sudo pacman -Qi "$dependency" >/dev/null 2>&1 \
-		|| { echo >&2 "$dependency is not installed. Please install it and re-run the script."; exit 1; }
+		if [[ $skipdeps =~ .*"$dependency".* ]]; then
+			true
+		else
+			sudo pacman -Qi "$dependency" >/dev/null 2>&1 \
+			|| { echo >&2 "$dependency is not installed. Please install it and re-run the script."; exit 1; }
+		fi
 	done
 
 # if apt is installed, use the debian dependencies
@@ -33,8 +59,12 @@ elif command -v apt 2>&1 >/dev/null; then
 
 	# check if dependencies are installed; if not, list the missing dependencies. if not available for the current os, error out
 	for dependency in "${dependencies[@]}"; do
-		sudo dpkg-query -W "$dependency" >/dev/null 2>&1 \
-		|| { echo >&2 "$dependency is not installed. Please install it and re-run the script."; exit 1; }
+		if [[ $skipdeps =~ .*"$dependency".* ]]; then
+			true
+		else
+			sudo dpkg-query -W "$dependency" >/dev/null 2>&1 \
+			|| { echo >&2 "$dependency is not installed. Please install it and re-run the script."; exit 1; }
+		fi
 	done
 
 # if apk is installed, install the alpine dependencies
