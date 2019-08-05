@@ -13,13 +13,13 @@ else
 fi
 
 # fetch the zone apex
-APEX="$(dig soa "$RECORDSET" | grep -v ^\; | grep SOA | awk '{print $1}' | sed 's/\.$//')"
+APEX="$(drill soa "$RECORDSET" | grep -v ^\; | grep SOA | awk '{print $1}' | sed 's/\.$//')"
 
 # fetch the zone ID for the apex
-ZONEID="$(aws route53 list-hosted-zones | grep "$APEX" -B1 | head -n1 | cut -d"\"" -f4 | cut -d"/" -f3)"
+ZONEID="$($HOME/.local/bin/aws route53 list-hosted-zones | grep "$APEX" -B1 | head -n1 | cut -d"\"" -f4 | cut -d"/" -f3)"
 
 # set the TTL for the record
-TTL=60
+TTL="60"
 
 # set the record type to update
 TYPE="A"
@@ -28,7 +28,10 @@ TYPE="A"
 COMMENT="Last updated @ `date`"
 
 # fetch our external IP address
-IP=`curl ipv4.icanhazip.com`
+NEWIP="$(curl -s ipv4.icanhazip.com)"
+
+# check what the record currently resolves to
+OLDIP="$(drill $RECORDSET -4 @1.1.1.1 | grep -A1 "ANSWER SECTION" | grep IN | awk '{ print $5 }')"
 
 # check if the IP is in a valid format
 function valid_ip()
@@ -48,15 +51,16 @@ function valid_ip()
     return $stat
 }
 
-# get the current directory
-# (from http://stackoverflow.com/a/246128/920350)
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-LOGFILE="$DIR/update-route53-$RECORDSET.log"
-IPFILE="$DIR/update-route53-$RECORDSET.ip"
+# log file locations
+LOGFILE="/tmp/$RECORDSET.log"
+IPFILE="/tmp/$RECORDSET.ip"
+
+# store date for logfile timestampps
+DATE="$(date +"%Y/%m/%d %H:%M:%S")"
 
 # make sure the IP address is valid
-if ! valid_ip $IP; then
-    echo "Invalid IP address: $IP" >> "$LOGFILE"
+if ! valid_ip $NEWIP; then
+    echo "$DATE Invalid IP address: $NEWIP. Exiting." >> "$LOGFILE"
     exit 1
 fi
 
@@ -66,12 +70,12 @@ if [ ! -f "$IPFILE" ]
     touch "$IPFILE"
 fi
 
-if grep -Fxq "$IP" "$IPFILE"; then
+if grep -Fxq "$NEWIP" "$IPFILE" && [ "$NEWIP" = "$OLDIP" ]; then
     # code if found
-    echo "IP is still $IP. Exiting" >> "$LOGFILE"
+    echo "$DATE IP is still $NEWIP. Exiting." >> "$LOGFILE"
     exit 0
 else
-    echo "IP has changed to $IP" >> "$LOGFILE"
+    echo "$DATE IP has changed to $NEWIP. Updating." >> "$LOGFILE"
     # fill a temp file with valid JSON
     TMPFILE=$(mktemp /tmp/temporary-file.XXXXXXXX)
     cat > ${TMPFILE} << EOF
@@ -83,7 +87,7 @@ else
           "ResourceRecordSet":{
             "ResourceRecords":[
               {
-                "Value":"$IP"
+                "Value":"$NEWIP"
               }
             ],
             "Name":"$RECORDSET",
@@ -96,7 +100,8 @@ else
 EOF
 
     # update the Hosted Zone record
-    aws route53 change-resource-record-sets \
+    echo "" >> "$LOGFILE"
+    $HOME/.local/bin/aws route53 change-resource-record-sets \
         --hosted-zone-id $ZONEID \
         --change-batch file://"$TMPFILE" >> "$LOGFILE"
     echo "" >> "$LOGFILE"
@@ -106,4 +111,4 @@ EOF
 fi
 
 # cache the IP address for next time
-echo "$IP" > "$IPFILE"
+echo "$NEWIP" > "$IPFILE"
